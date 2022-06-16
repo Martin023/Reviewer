@@ -23,9 +23,10 @@ def post_proj(request):
             description = form.cleaned_data['description']
             screenshot = form.cleaned_data['screenshot']
             category = form.cleaned_data['category']
-            name = form.cleaned_data['name']
+            
             # messages.success("successfully submitted for review")
-            form.save()
+            new_site = WebReview(name,description,screenshot,category)
+            new_site.save()
 
     form = WebReviewForm()
     return render(request,"post_project.html", {'form':form})
