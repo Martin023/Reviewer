@@ -31,7 +31,7 @@ class WebReview(models.Model):
     description = models.TextField()
     screenshot = CloudinaryField()
     date_added = models.DateTimeField(auto_now_add=True)
-    category = models.Choices('web',on_delete=models.DO_NOTHING )
+    
     rating = models.ForeignKey(Rating,on_delete=models.DO_NOTHING)
     slug = models.SlugField()
 
