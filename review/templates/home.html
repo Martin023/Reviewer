@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static%}
+
+
+
+{% block content %}
+
+<div class="navbar" >
+	<div class="container-fluid uk">
+		<p>#StopWarInUkraine   Save the children</p>
+	</div>
+	<div class="container menu">
+		<a href="#">ENGLISH</a> <span>The awards of design, creativity and innovation on the internet </span><span>insta twitter fb</span>
+	</div>
+	<div class="login-bar" >
+		<div>
+			<a href="">Menu</a> search
+		</div>
+		<div>
+			<span class="title">Revviewwer</span>
+		</div>
+		<div class="left-nav">
+			<div class="sigin"><a href="{% url 'register' %}">SIGN IN/LOGOUT</a></div>
+			<div class="submit-site">
+				<a href="{% url 'post' %}">SUBMIT YOUR SITE</a>
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+<div class="project_of_day">
+	{% for i in projects %}
+	{% if i.rating > highest_rating %}
+
+	<img src="{{ i.screenshot }}">
+	{% endif %}
+	{% endfor %}
+</div>
+<div class="more_projects">
+	{ % for i in projects %}
+	
+</div>
+
+{% endblock %}

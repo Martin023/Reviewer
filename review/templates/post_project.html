@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static%}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+
+<div class="form-cont">
+    <div class="form container-fluid">
+
+        <form action="{% url 'post' %}" method="POST" class="form-control form-dir">
+            {% csrf_token %} 
+            
+            {{form}}
+
+            <div class="submit-btn">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
