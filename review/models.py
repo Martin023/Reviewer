@@ -1,70 +1,95 @@
+from email.policy import default
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.urls import reverse
 from cloudinary.models import CloudinaryField
+
 # Create your models here.
 
-
-class Category(models.Model):
-    name = models.CharField(max_length= 30)
-
-
+class Technologies(models.Model):
+    title = models.CharField(max_length=20)
+     
     def __str__(self):
-        return self.name
+        return self.title
 
+
+
+class Site(models.Model):
+    sitename = models.CharField(max_length=20)
+    image = CloudinaryField('image')
+    description = models.TextField()
+    livelink =  models.URLField(max_length=200)
+    category = models.CharField(max_length=300, null=True, blank=True)
+    dateuploaded = models.DateTimeField(default=timezone.now)
+    country = models.CharField(max_length=100)
+    user =  models.ForeignKey(User, on_delete=models.CASCADE)
+    technologies = models.ManyToManyField(Technologies, related_name='technologies')
+    likes = models.IntegerField(default=0)
     
-    def save_category(self):
-        self.save()
+    def __str__(self):
+        return self.sitename
+    
+    def get_absolute_url(self):
+        return reverse('homepage')
+    @classmethod
+    def getSites(cls):
+        allSites = cls.objects.all()
+        return allSites
+    
+    @classmethod
+    def search_by_sitename(cls,search_term):
+        site = cls.objects.filter(sitename__icontains=search_term)
+        return site
+
 
 class Rating(models.Model):
-    number = models.CharField(max_length= 30)
-
-
+    design = models.IntegerField(default=0,null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    
     def __str__(self):
-        return self.number
-
+        return str(self.pk)
     
     def save_rating(self):
         self.save()
-
-
-class WebReview(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    screenshot = CloudinaryField()
-    date_added = models.DateTimeField(auto_now_add=True)
-    
-    rating = models.ForeignKey(Rating,on_delete=models.DO_NOTHING)
-    slug = models.SlugField()
-
-    def __str__(self):
-        return self.name
-
-     
-    def save_site(self):
-        self.save()
-
-    def delete_site(self):
-        self.delete()
-
-    def update_site(self,name,description,category,screenshot):
-        self.name=name,
-        self.description=description,
-        self.category=category,
-        self.screenshot=screenshot
         
+        
+    @classmethod
+    def get_ratings(cls,id):
+        ratings = cls.objects.filter(site_id=id)
+        return ratings  
+
+class RatingUsability(models.Model):
+    usability = models.IntegerField(default=0,null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.pk)
+    
+    def save_rating(self):
         self.save()
-
+        
+        
     @classmethod
-    def display_site(cls):
-        site=cls.objects.all()
-        return site
+    def get_ratings(cls,id):
+        ratings = cls.objects.filter(site_id=id)
+        return ratings  
 
+class RatingContent(models.Model):
+    content = models.IntegerField(default=0,null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.pk)
+    
+    def save_rating(self):
+        self.save()
+        
+        
     @classmethod
-    def search_by_cat(cls,search_term):
-        site = cls.objects.filter(category__name__icontains=search_term)
-        return site
-
-
-    @classmethod
-    def search_by_slug(cls,slug):
-        site = cls.objects.get(slug=slug)
-        return site
+    def get_ratings(cls,id):
+        ratings = cls.objects.filter(site_id=id)
+        return ratings  
