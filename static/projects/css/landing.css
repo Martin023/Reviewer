@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=PT+Mono&family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap');
+
+
+
+.checked {
+    color: rgb(184, 2, 135);
+  }
+  .checked2 {
+    color: rgb(0, 255, 30);
+  }
+  .checked3 {
+    color: rgb(255, 0, 0);
+  }
+.my-btn{
+    background-color: inherit !important;
+    border: 0 !important;
+}
+.whats{
+    border-bottom: 5px solid black;
+}
