@@ -1,0 +1,48 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+ 
+
+<div class="container all">
+    <div class="container">
+        <div class="row ">
+          
+            <div class="col-md-6">
+                <img src="{% static 'projects/assets/animate.svg' %}" alt="" class="img-responsive">
+            </div>
+            <div class="col-md-6  mt-5">
+                <div class="col  mt-3 " >
+                    <div class="col form-area card">
+                        <h3 class="text-center">Welcome Back <i class="fa-regular fa-face-grin-tears mt-4"></i></h3>
+                        <form class="mt-5 container form-control" action="" method="POST">
+                            {% csrf_token %}
+
+                            <!-- Email input -->
+                           {{form | crispy}}
+                          
+                            <!-- Submit button -->
+                            <button type="submit" class="btn  btn-lg mt-5  mb-4 btn-block fw-bold" style="background-color: #48c5b5; color: white;">Log in</button>
+                        <div class="mt-4 text-center ">
+                        <p>Dont have an account? <a href="{% url 'register' %}" class="sign fw-bold">Sign up</a></p>
+                      </div>
+                  
+                            
+                          </form>
+
+                          
+                    </div>
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
