@@ -1,0 +1,106 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+
+
+<div class="container all">
+{% block content %}
+
+<div class="row all">
+    <div class="col-md-2"></div>
+<div class="col-md-8">
+    <div class="col mt-5">
+        <div class="card " style="border-radius: 0px;">
+          <img src="{{post.image.url}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            
+              <div class="row mt-4">
+                  <div class="col-md-12 text-center mt-3">
+                    <h6 class="fw-bold">Design <i class="fa-brands fa-figma"></i> </h6><div id="confirm-box"></div>
+                <form action="" method="POST" class="rate-form mt-3" id="{{post.id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="formOne">
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="first"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="second"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="third"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fourth"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fifth"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="sixth"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="seventh"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="eighth"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="ninth"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="tenth"></button>
+                </form>
+                  </div>
+
+
+
+                  <div class="col-md-12 text-center mt-3">
+                    <h6 class="fw-bold">Usability <i class="fa-solid fa-user-check"></i> </h6><div id="confirm-box2"></div>
+                <form action="" method="POST" class="rate-form2 mt-3" id="{{post.id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="formTwo">
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="first2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="second2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="third2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fourth2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fifth2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="sixth2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="seventh2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="eighth2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="ninth2"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="tenth2"></button>
+                </form>
+                  </div>
+                  <div class="col-md-12 text-center mt-3">
+                    <h6 class="fw-bold">Content <i class="fa-solid fa-arrows-to-circle"></i> </h6><div id="confirm-box23"></div>
+                <form action="" method="POST" class="rate-form23 mt-3" id="{{post.id}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="formTwo">
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="first23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="second23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="third23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fourth23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="fifth23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="sixth23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="seventh23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="eighth23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="ninth23"></button>
+                    <button type="submit" class="fa-regular fa-square my-btn fa-3x" id="tenth23"></button>
+                </form>
+                </div>
+               
+              </div>
+              <div class="container mt-5">
+              <p class="card-title mb-3 mt-5 "><small></small></p>
+              <div class="row mt-3">
+                  <div class="col"><h4 class=" text-dark">{{post.sitename|upper}}</h4>
+                  </div>
+                  <div class="col card-text text-muted">
+                   <h6> Posted on  {{post.dateuploaded}} <i class="fa-solid fa-clock"></i></h6>
+                  </div>
+              </div>
+              <div class="row mt-3">
+                  <div class="col">
+                      <p class="card-text">By <small class="fw-bold">{{post.user.username}} from ({{post.country}})</small></p>
+                      <p class="card-text">{{post.description}}</p>
+                  </div>
+                  <div class="col">
+                      <span class=""><small class="mb-1">Website <a href="{{post.livelink}}">{{post.livelink}}</a></small></span>
+                      <span class=""><small class="mb-1"></small></span>
+                      <span class=""><small class="mt-1"></small></span>
+                  </div>
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+          
+      </div>
+</div>
+<div class="col-md-2"></div>
+</div>
+
+
+{% endblock %}
+</div>

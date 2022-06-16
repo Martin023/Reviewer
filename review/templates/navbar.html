@@ -1,1 +1,284 @@
+{% load static %}
 
+
+
+{% if user.is_authenticated %}
+{% else %}
+<nav class="navbar navbar-dark nav3" style="background-color: black;">
+    <div class="container-fluid">
+      <span class="navbar-text m-auto text-white nav3text">
+        #StopWarInUkraine <img class="img-responsive " src="{% static 'projects/assets/ukraine.png' %}" height="25" alt=""> Save the children
+      </span>
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-light nav2 " style="background-color: #f5f7f6;">
+    <div class="container-fluid justify-content-between">
+      <!-- Left elements -->
+      <div class="d-flex">
+        <!-- Brand -->
+        <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="#">
+           <small><p class="laneng mt-4"><u> English</u></p> </small> 
+        </a>
+        
+      </div>
+      <!-- Left elements -->
+  
+      <!-- Center elements -->
+      <ul class="navbar-nav flex-row d-none d-md-flex">
+          <li class="nav-item me-3 me-lg-3">
+       <small><p class="m-4">The awards of design, creativity and innovation on the internet</p></small>
+        </li>
+      </ul>
+      <!-- Center elements -->
+  
+      <!-- Right elements -->
+      <ul class="navbar-nav flex-row">
+        
+        
+        <li class="nav-item ">
+          <small>
+            <i class="fa-brands fa-instagram m-2"></i>
+            <i class="fa-brands fa-twitter m-2"></i>
+            <i class="fa-brands fa-facebook-f m-2"></i>
+          </small>
+        </li>
+    </ul>
+      <!-- Right elements -->
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Navbar-->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top " style="background-color: #f5f7f6;">
+    <div class="container-fluid justify-content-between">
+      <!-- Left elements -->
+      <div class="d-flex">
+        <!-- Brand -->
+        <a class="navbar-brand  d-flex align-items-center" href="#">
+            <div
+            class=" nav5"
+            style="background-color: #f8f9fb; border:none; border-right: 0.1px solid rgba(126, 107, 107, 0.35); border-radius: 0;"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasWithBothOptions"
+            aria-controls="offcanvasWithBothOptions"
+            
+          >
+            <i class="fas fa-bars m-3"></i> <small class="m-2"> Menu</small> 
+        </div><i class="fas fa-search mt-2 ms-2" type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        ></i>
+        </a>
+        
+      </div>
+      <!-- Left elements -->
+  
+      <!-- Center elements -->
+      <ul class="navbar-nav flex-row d-none d-md-flex">
+          <li class="nav-item ">
+        <a href="{% url 'homepage' %}"><img class="img-responsive ms-5" src="{% static 'projects/assets/awwards.svg' %}" height="25" alt=""></a>
+        </li>
+      </ul>
+      <!-- Center elements -->
+  
+      <!-- Right elements -->
+      <ul class="navbar-nav flex-row">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown me-5 me-lg-1 mt-3">
+            <a class="nav-link dropdown-toggle hidden-arrow"
+            href="#"
+            id="DropdownMenuLink"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <span class="text-dark ">{{user.username|upper}}</span>
+           
+              <img
+                src="{{user.profile.image.url}}"
+                class="rounded-circle me-4"
+                height="30"
+                alt="..."
+                loading="lazy"
+              />
+            
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="DropdownMenuLink"
+            >
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-regular fa-user"></i> Profile</a>
+              </li><hr>
+             
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-regular fa-bookmark"></i> Collections</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-solid fa-sliders"></i> Courses</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-regular fa-user"></i> Notifications</a>
+              </li><hr>
+              <li>
+                <a class="dropdown-item" href="{% url 'edit-account' %}"><i class="fa-regular fa-user"></i> Edit Account</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-regular fa-user"></i> Billing</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa-solid fa-repeat"></i> logout</a>
+              </li>
+            </ul>
+          </li>
+        {% else %}
+        <li class="nav-item me-3 me-lg-1">
+            <a class="nav-link" href="{% url 'register' %}">
+               <small> <p class=" text-dark mt-3 nav4text">REGISTER/LOG IN</p></small>
+            </a>
+          </li>
+          {% endif %}
+        <li class="nav-item submitbtn">
+          <a class="nav-link text-white m-3 " href="{% url 'new-site'%}">
+           <small class=""> SUBMIT YOUR SITE!</small>
+          </a>
+        </li>
+    </ul>
+      <!-- Right elements -->
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header all">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Quick Access</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body all">
+    <form class="d-flex input-group w-auto" role="search" action="{% url 'search_results' %}">
+        <input
+          type="text"
+          class="form-control rounded"
+          placeholder="Search for Projects"
+          name="project"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <span class="input-group-text border-0" id="search-addon">
+          <i class="fas fa-search"></i>
+        </span>
+      </form>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            
+            <th scope="col"><a href="{% url 'homepage' %}">Home</a></th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          
+            <td><a href="{% url 'api-details'%}"> API Endpoints</a></td>
+          </tr>
+          <tr>
+           
+            <td><a href="{% url 'edit-account' %}">Settings</a></td>
+          </tr>
+          <tr>
+            {% if user.is_authenticated %}
+           <td><a href="{% url 'logout'%}">Logout</a> </td>
+            {% else %}
+           <td><a href="{% url 'register' %}">Register/Login</a></td> 
+            {% endif %}
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- 
+Modal for search -->
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+       
+        <div class="modal-body">
+            <form class="d-flex input-group w-auto" role="search" action="{% url 'search_results' %}">
+                <input
+                  type="text"
+                  class="form-control rounded"
+                  placeholder="Search for Projects"
+                  name="project"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </form>
+        </div>
+       
+         
+        </div>
+      </div>
+    </div>
+  </div>
