@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from projects.models import Site
+from review.models import Site
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
