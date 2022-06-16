@@ -1,67 +1,132 @@
-from .models import *
-from pyexpat.errors import messages
-from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
-from review.forms import WebReviewForm
+from .forms import NewSiteForm
+from .models import RatingContent, RatingUsability, Site, Technologies, Rating
+import datetime as dt
+from users.models import Profile
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+
 def home(request):
-    projects = WebReview.display_site()
-    highest_rating = 7
-    return render(request,'home.html',{'highest_rating ':highest_rating, 'projects':projects})
+    user = request.user
+    site_items = Site.objects.all()
+    all_users = User.objects.all()
+    date = dt.date.today()
+    context = {
+        "sites":site_items,
+        "users": all_users,
+        "current_user": user,
+        "date":date,
+    }
+    return render(request, 'projects/home.html', context)
+def search_results(request):
+    
+    if 'project' in request.GET and request.GET["project"]:
+        search_term = request.GET.get("project")
+        searched_projects = Site.search_by_sitename(search_term)
+        message = f"{search_term}"
 
+        return render(request, 'projects/search.html',{"message":message,"sites": searched_projects})
 
+    else:
+        message = "You haven't searched for any projects"
+        return render(request, 'projects/search.html',{"message":message})
 
-def post_proj(request):
+def apipage(request):
+    
+    
    
+    return render(request, 'projects/api.html')
+
+@login_required
+def NewSite(request):
+    user = request.user.id
+    tags_objs = []
+    
     if request.method == 'POST':
-        form = WebReviewForm
-        if form.is_valid:
-            name = request.POST.get('name')
-            description = request.POST.get('description')
-            screenshot = request.POST.get('screenshot')
-            category = request.POST.get('category')
+        form = NewSiteForm(request.POST, request.FILES)
+        if form.is_valid():
+            sitename = form.cleaned_data.get('sitename')
+            url = form.cleaned_data.get('url')
+            description = form.cleaned_data.get('description')
+            category = form.cleaned_data.get('category')
+            country = form.cleaned_data.get('country')
+            technolog = form.cleaned_data.get('technologies')
+            image = form.cleaned_data.get('image')
+            tags_list = list(technolog.split(','))
             
-            # messages.success("successfully submitted for review")
-            new_site = WebReview(name,description,screenshot,category)
-            new_site.save_site()
+            for tag in tags_list:
+                t, created = Technologies.objects.get_or_create(title=tag)
+                tags_objs.append(t)
+            p, created = Site.objects.get_or_create(sitename=sitename, livelink=url, description=description, category=category, country=country, image=image, user_id=user)
+            p.technologies.set(tags_objs)
+            p.save()
+            return redirect('homepage')
+    else:
+        form = NewSiteForm()
+    context = {
+        'form':form
+    }
+    return render(request, 'projects/new_project.html', context)
 
-    form = WebReviewForm()
-    return render(request,"post_project.html", {'form':form})
 
-def register(request):
+@login_required
+def View_site(request, pk):
+    post = Site.objects.get(id=pk)
+    
+    try:
+        ratings = Rating.get_ratings(pk)
+        
+    except:
+        ratings = None
+    
+    context = {
+        'post':post,
+        'ratings':ratings
+    }
+    return render(request, 'projects/singlesite.html', context)
+
+def rate_site(request):
+    user = request.user
     if request.method == 'POST':
-        username = request.POST.get('username')
+        
+        el_id = request.POST.get('el_id')
+        val = request.POST.get('val')
+        site = Site.objects.get(id=el_id)
+        user_profile = User.objects.get(username=user.username)
+        Rating.objects.create(design=val, site=site, author=user_profile)
+        
+        return JsonResponse({'success':'true', 'score':val}, safe=False)
+    return JsonResponse({'success', 'false'})
 
-        f_name = request.POST.get('first_name')
+@csrf_exempt
+def rate_usability(request):
+    user = request.user
+    if request.method == 'POST':
+        
+        el_id = request.POST.get('el_id')
+        val = request.POST.get('val')
+        site = Site.objects.get(id=el_id)
+        user_profile = User.objects.get(username=user.username)
+        RatingUsability.objects.create(usability=val, site=site, author=user_profile)
+        
+        return JsonResponse({'success':'true', 'score':val}, safe=False)
+    return JsonResponse({'success', 'false'})
 
-        ## Or use f_name = request.POST['f_name']
-
-        l_name = request.POST.get('last_name')
-
-        email = request.POST.get('email')
-
-        password = request.POST.get('password')
-
-        c_password = request.POST.get('confirm_password')
-
-        if password == c_password:
-            my_user = User.objects.create_user(username,password,email)
-            my_user.first_name = f_name
-            my_user.last_name = l_name
-
-            my_user.save()
-
-            messages.success(request,"Account successfully created please login")
-
-            return redirect("signin")
-
-        else:
-            messages.error(request,"Passwords don't match")
-
-    return render(request,'register.html')
-
-    
-    
+@csrf_exempt
+def rate_content(request):
+    user = request.user
+    if request.method == 'POST':
+        
+        el_id = request.POST.get('el_id')
+        val = request.POST.get('val')
+        site = Site.objects.get(id=el_id)
+        user_profile = User.objects.get(username=user.username)
+        RatingContent.objects.create(content=val, site=site, author=user_profile)
+        
+        return JsonResponse({'success':'true', 'score':val}, safe=False)
+    return JsonResponse({'success', 'false'})
