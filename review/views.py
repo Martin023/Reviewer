@@ -1,4 +1,4 @@
-from.models import *
+from .models import *
 from pyexpat.errors import messages
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
@@ -8,7 +8,7 @@ from review.forms import WebReviewForm
 
 # Create your views here.
 def home(request):
-    projects = WebReview.objects.all()
+    projects = WebReview.display_site()
     highest_rating = 7
     return render(request,'home.html',{'highest_rating ':highest_rating, 'projects':projects})
 
@@ -17,16 +17,16 @@ def home(request):
 def post_proj(request):
    
     if request.method == 'POST':
-        form = WebReviewForm(request.POST)
+        form = WebReviewForm
         if form.is_valid:
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            screenshot = form.cleaned_data['screenshot']
-            category = form.cleaned_data['category']
+            name = request.POST.get('name')
+            description = request.POST.get('description')
+            screenshot = request.POST.get('screenshot')
+            category = request.POST.get('category')
             
             # messages.success("successfully submitted for review")
             new_site = WebReview(name,description,screenshot,category)
-            new_site.save()
+            new_site.save_site()
 
     form = WebReviewForm()
     return render(request,"post_project.html", {'form':form})
