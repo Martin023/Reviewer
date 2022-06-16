@@ -1,46 +1,80 @@
-{% extends 'base.html' %}
+{% extends 'projects/base.html' %}
 
-{% load static%}
-
-
+{% load static %}
 
 {% block content %}
 
-<div class="navbar" >
-	<div class="container-fluid uk">
-		<p>#StopWarInUkraine <span><img src="{% static 'assets/ukraine.png' %}"</span>  Save the children</p>
-	</div>
-	<div class="container menu">
-		<a href="#">ENGLISH</a> <span>The awards of design, creativity and innovation on the internet </span><span>insta twitter fb</span>
-	</div>
-	<div class="login-bar" >
-		<div>
-			<a href="">Menu</a> search
-		</div>
-		<div>
-			<span class="title">Revviewwer</span>
-		</div>
-		<div class="left-nav">
-			<div class="sigin"><a href="{% url 'register' %}">SIGN IN/LOGOUT</a></div>
-			<div class="submit-site">
-				<a href="{% url 'post' %}">SUBMIT YOUR SITE</a>
-			</div>
-		</div>
+<div class="all">
+    <!-- Start of hero section -->
 
-	</div>
-	
+    <header>
+  
+      
+        <!-- Background image -->
+        <div
+          id="intro-example"
+          class="p-5 text-center bg-image"
+          style="background-image: url('/static/projects/assets/cover.jpg');"
+        >
+          <div class="mask">
+              <h6 class="d-flex justify-content-start m-3 text-white">Site of the day : {{date.day}}-{{date.month}}-{{date.year}}</h6>
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="text-white">
+                <h1 class="mb-3 fw-bold spc2">HELLO: Awwwards Clone</h1>
+                <p class="mb-4">BY <span class="spc">SIRGAMA.</span>  FROM <span class="spc">NAIROBI</span> WITH <span class="spc">7.42</span></p>
+                    <div class="m-5">
+                        <div class="badge text-center m-5"><p class="text-center mt-md-3">7<small class="tsmall">.34</small></p></div>
+                        <div class="badge2 text-center m-3"><p class="text-center mt-md-3">8<small class="tsmall">.47</small></p></div>
+                        <div class="badge3 text-center m-3"><p class="text-center mt-md-3">6<small class="tsmall">.92</small></p></div>
+                        <div class="badge4 text-center m-3"><p class="text-center mt-md-3">9<small class="tsmall">.88</small></p></div>
+                    </div>
+              </div>
+              
+            </div>
+            
+          </div>
+          
+        </div>
+        <!-- Background image -->
+      </header>
+
+    <!-- End of hero section -->
 </div>
-<div class="project_of_day">
-	{% for i in projects %}
-	{% if i.rating > highest_rating %}
+<div class="container-fluid projectsarea all">
+    <div class="all">
+        
+    </div>
+    <div class="container-fluid">
+        <h6 class="fw-bold mt-5">Nominees We need your vote!</h6>
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            {% for site in sites %}
+            <div class="col mt-5">
+              <div class="card " style="border-radius: 0px;">
+                <a href="{% url 'view-site' site.id %}"><img src="{{site.image.url}}" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                  <p class="card-title mb-3 "><small>{{site.sitename}}</small></p>
+                    <div class="row mt-3">
+                        <div class="col"><p class="card-text">From {{site.country}}</p>
+                        </div>
+                        <div class="col card-text">
+                            {{site.dateuploaded}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col"><p class="card-text">By <small class="fw-bold">{{site.user.username}}</small></p>
+                        </div>
+                        <div class="col">
+                            <button class="btn  btn-sm btntxt"><small class="mb-1">HM</small></button>
+                            <button class="btn  btn-sm btntxt2"><small class="mb-1">DEV</small></button>
+                            <button class="btn  btn-sm btntxt3"><small class="mt-1">SOTD</small></button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
 
-	<img src="{{ i.screenshot }}">
-	{% endif %}
-	{% endfor %}
+          </div>
+    </div>
 </div>
-<div class="more_projects">
-	{ % for i in projects %}
-
-</div>
-
-{% endblock %}
+{% endblock content %}
